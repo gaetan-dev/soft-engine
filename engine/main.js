@@ -49,6 +49,7 @@ function loadDOMCompleted () {
 
 // Initialize the movement
 function initMove (e) {
+  clearTimeout(autorotateTimeout)
   mousedown = true
   mx = e.clientX
   my = e.clientY
@@ -72,4 +73,15 @@ function move (e) {
 
 function stopMove () {
   mousedown = false
+  autorotateTimeout = setTimeout(autorotate, 2000)
+}
+
+let autorotateTimeout = setTimeout(autorotate, 2000)
+
+function autorotate () {
+  for (let mesh of scene.meshes) {
+    mesh.rotate(-Math.PI / 100, 0)
+  }
+
+  autorotateTimeout = setTimeout(autorotate, 30)
 }
